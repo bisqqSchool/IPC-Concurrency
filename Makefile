@@ -1,20 +1,29 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic -std=c11 -g
-SRCS = start.c
+CFLAGS = -Wall -Wextra -pedantic -std=c11 -g -pthread
+SRCS = udp_client.c udp_server.c
 OBJS = $(SRCS:.c=.o)
-TARGET = exe
+EXECS = $(addprefix bin/,$(SRCS:.c=))
 
-# Build the executable
-all: $(TARGET)
+# Build all executables
+all: binfolder $(EXECS)
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+# Create bin folder
+binfolder:
+	mkdir -p bin
+
+# Compile source files into object files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Build each executable separately
+bin/%: %.o
+	$(CC) $(CFLAGS) $< -o $@
 
 # Clean up generated files
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -rf bin
 
-debug: $(TARGET)
-	gdb -tui ./$(TARGET)
+debug: $(EXECS)
+	gdb -tui ./bin/start
 
 .PHONY: all clean debug
