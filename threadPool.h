@@ -10,7 +10,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-#include <stdbool.h>
 
 #include "list.h"
 
@@ -19,7 +18,7 @@
 
 typedef struct ThreadPool {
     pthread_t         threadPool[MAX_THREADS];   // Four threads per routine
-    pthread_mutex_t   listMutex;                 // Only one shared resource (List)
+    pthread_mutex_t   listMutex;                 // Only one shared resource (Nodes)
     pthread_cond_t    clientListCondition;       // Condition variable for signaling
     pthread_cond_t    remoteListCondition;       // Condition variable for signaling
 } ThreadPool;
@@ -33,7 +32,6 @@ typedef struct UDP {
     uint16_t            clientPort;
     int                 socket;
     const char*         remoteMachineName;
-    bool                shouldTerminate;
 } UDP;
 
 // Setup Udp and destroy it

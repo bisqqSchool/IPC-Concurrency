@@ -5,6 +5,7 @@ OBJDIR = obj/fileobjs
 OBJ_SRCS = $(addprefix $(OBJDIR)/,$(SRCS:.c=.o)) obj/list.o
 EXECDIR = bin
 EXECS = $(addprefix $(EXECDIR)/,s-talk)
+VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all
 
 # Build all executables
 all: $(EXECS)
@@ -20,6 +21,10 @@ $(EXECS): $(OBJDIR) $(OBJ_SRCS) | $(EXECDIR)
 # Compile source files into object files
 $(OBJDIR)/%.o: %.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+# Valgrind test target
+valgrind: $(EXECS)
+	valgrind $(VALGRIND_FLAGS) ./$(EXECS)
 
 # Clean up generated files
 clean:

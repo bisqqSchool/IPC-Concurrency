@@ -31,7 +31,6 @@ int main(int argc, char const* argv[]) {
     udp.clientPort = (uint16_t)atoi(argv[1]);
     udp.remotePort = (uint16_t)atoi(argv[3]);
     udp.remoteMachineName = argv[2];
-    udp.shouldTerminate = false;
 
     // Initialize UDP
     udpInitialize(&udp);
