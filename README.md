@@ -49,5 +49,4 @@
     To execute you will need to run it as `./bin/s-talk <myPort> <remoteMachineName> <remotePortNumber>`. Since that's where the make file outputs the exe.
     
     #### **Output In WSL2 With Virtual IP Addresses**
-    
-    ![](<Local testing.png>)
+    ![](<localtesting.png>)
